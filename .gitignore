@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Mailcrawler/.vs
+/Mailcrawler/src/MailCrawler.Core/bin/Debug/net9.0
+/Mailcrawler/src/MailCrawler.Core/obj
+/Mailcrawler/tests/MailCrawler.Tests/bin/Debug/net9.0
+/Mailcrawler/tests/MailCrawler.Tests/obj
+/Mailcrawler/tests/MailCrawler.Tests/bin/Release/net9.0
