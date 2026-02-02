@@ -30,7 +30,7 @@ docker compose up -d --build
 API dispo sur : http://localhost:8080
 Swagger : http://localhost:8080/swagger
 
-#  2) Lancer le frontend
+# Lancer le frontend
 
 Dans le dossier frontend/technicaltestcs-front :
 
