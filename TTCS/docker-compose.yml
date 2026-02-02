@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: technicaltestcs-postgres
+    environment:
+      POSTGRES_DB: technicaltestcs
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - technicaltestcs_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d technicaltestcs"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: ./TechnicalTestCS.Api/Dockerfile
+    container_name: technicaltestcs-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Db: Host=postgres;Port=5432;Database=technicaltestcs;Username=postgres;Password=postgres
+      ExternalApi__BaseUrl: https://cms-beta.happytal.com
+      Loki__Uri: http://loki:3100
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  loki:
+    image: grafana/loki:2.9.6
+    container_name: technicaltestcs-loki
+    profiles: ["obs"]
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  grafana:
+    image: grafana/grafana:10.4.5
+    container_name: technicaltestcs-grafana
+    profiles: ["obs"]
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - loki
+
+volumes:
+  technicaltestcs_pgdata:

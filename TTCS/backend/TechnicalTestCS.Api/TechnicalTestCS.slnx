@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="TechnicalTestCS.Api/TechnicalTestCS.Api.csproj" />
+  <Project Path="TechnicalTestCS.Domain/TechnicalTestCS.Domain.csproj" />
+  <Project Path="TechnicalTestCS.Infrastructure/TechnicalTestCS.Infrastructure.csproj" />
+  <Project Path="TechnicalTestCS.Tests/TechnicalTestCS.Tests.csproj" />
+</Solution>
