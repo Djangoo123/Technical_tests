@@ -28,6 +28,7 @@ Depuis la racine du repo :
 docker compose up -d --build
 
 API dispo sur : http://localhost:8080
+
 Swagger : http://localhost:8080/swagger
 
 # Lancer le frontend
@@ -35,9 +36,11 @@ Swagger : http://localhost:8080/swagger
 Dans le dossier frontend/technicaltestcs-front :
 
 npm install
+
 npm run dev
 
 Front dispo sur : http://localhost:5173
+
 Le front proxy automatiquement /api vers http://localhost:8080.
 
 Observability optionnelle (Grafana + Loki)
@@ -45,6 +48,7 @@ Observability optionnelle (Grafana + Loki)
 #  Docker  :
 
 docker-compose.yml : api + postgres > docker compose up -d --build
+
 Stop > docker compose down
 
 docker-compose.obs.yml : loki + grafana + activation Loki côté API
@@ -54,7 +58,9 @@ Lancer avec observability
 Depuis la racine du repo :
 
 docker compose -f docker-compose.yml -f docker-compose.obs.yml up -d --build
+
 docker compose -f docker-compose.yml -f docker-compose.obs.yml up -d loki grafana
+
 Stop > docker compose -f docker-compose.yml -f docker-compose.obs.yml down
 
 # Grafana 
@@ -62,12 +68,15 @@ Stop > docker compose -f docker-compose.yml -f docker-compose.obs.yml down
 http://localhost:3000 (admin / admin)
 
 Créer une datasource loki > lier avec cette url > http://loki:3100 
+
 Dans notre cas l'authentification sera sans paramètres mais l'on peut ajouter un username/password ( ou token ). 
+
 Ces informations sont à repercuter dans l'appsettings si ce choix est fait.
 
 Après quelques modifications d'articles sur le front, aller dans Grafana → Explore → datasource Loki > Explore data
 
 requête exemple :
+
 {service="technicaltestcs-api"}
 
 # Tests
