@@ -5,10 +5,25 @@ import DOMPurify from "dompurify";
 
 const props = defineProps<{ content?: string | null }>();
 
+/**
+ * Markdown renderer:
+ * - html:true to allow backend-provided HTML blocks
+ * - still sanitized by DOMPurify before rendering
+ */
 const md = new MarkdownIt({
-  html: false,      // No html here
+  html: true,
   linkify: true,
   breaks: true,
+});
+
+DOMPurify.addHook("afterSanitizeAttributes", (node) => {
+  if (node instanceof HTMLAnchorElement) {
+    const href = (node.getAttribute("href") || "").trim().toLowerCase();
+    if (href.startsWith("javascript:")) node.removeAttribute("href");
+
+    node.setAttribute("rel", "noopener noreferrer");
+    node.setAttribute("target", "_blank");
+  }
 });
 
 const html = computed(() => {
@@ -17,6 +32,10 @@ const html = computed(() => {
 
   return DOMPurify.sanitize(rendered, {
     USE_PROFILES: { html: true },
+
+    // in case of attacks
+    FORBID_TAGS: ["script", "style", "iframe", "object", "embed", "svg", "math"],
+    FORBID_ATTR: ["style"],
   });
 });
 </script>
