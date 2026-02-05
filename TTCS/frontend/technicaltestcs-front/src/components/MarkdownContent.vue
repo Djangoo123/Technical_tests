@@ -16,6 +16,8 @@ const md = new MarkdownIt({
   breaks: true,
 });
 
+// Note : can have strange effects
+// Todo : make a module sanitize
 DOMPurify.addHook("afterSanitizeAttributes", (node) => {
   if (node instanceof HTMLAnchorElement) {
     const href = (node.getAttribute("href") || "").trim().toLowerCase();

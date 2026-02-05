@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
-import {
-  getAdminArticles,
-  updateArticleStatus,
-  type ArticleSummaryDto,
-  type ArticleStatus,
-  type Action
-} from "../api/articles";
+import { getAdminArticles, updateArticleStatus } from "../api/articles";
+import type { ArticleSummaryDto } from "../types/ArticleSummaryDto";
+import type { ArticleStatus } from "../types/ArticleStatus";
+import type { Action } from "../utils/Actions";
 import StatusBadge from "../components/StatusBadge.vue";
 import { nextActions } from "../utils/Actions";
 

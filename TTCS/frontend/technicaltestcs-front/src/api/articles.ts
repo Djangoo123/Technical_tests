@@ -13,6 +13,7 @@ async function http<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
 
   if (!res.ok) {
     const text = await res.text();
+    // Todo : review this (loosing data right now)
     throw new Error(text || `HTTP ${res.status}`);
   }
   return (await res.json()) as T;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ArticleStatus } from "../api/articles";
+import type { ArticleStatus } from "../types/ArticleStatus";
 
 const props = defineProps<{ status: ArticleStatus }>();
 
