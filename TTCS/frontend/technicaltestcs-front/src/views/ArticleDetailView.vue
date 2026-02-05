@@ -114,9 +114,10 @@ onMounted(load);
               </div>
             </div>
 
-            <p v-if="p.description" class="mt-3 text-sm text-slate-700 line-clamp-4">
-             <MarkdownContent v-if="item.content" :content="p.description" />
-            </p>
+            <div v-if="p.description" class="mt-3 text-sm text-slate-700 max-h-32 overflow-y-auto">
+              <MarkdownContent :content="p.description" />
+            </div>
+
           </div>
         </div>
       </section>
