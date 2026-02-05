@@ -15,6 +15,7 @@ namespace TechnicalTestCS.Api.Services
         {
             if (ids.Count == 0) return [];
 
+            // Todo : review this, ok for this test but it should be handled by pagination or another table
             return await _db.ArticleStatuses
                 .Where(x => ids.Contains(x.ArticleId))
                 .ToDictionaryAsync(x => x.ArticleId, x => x.Status, cancellationToken: ct);
@@ -53,5 +54,6 @@ namespace TechnicalTestCS.Api.Services
             await _db.SaveChangesAsync(ct);
             return next;
         }
+
     }
 }

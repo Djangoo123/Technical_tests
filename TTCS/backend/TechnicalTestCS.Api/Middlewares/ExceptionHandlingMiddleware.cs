@@ -58,6 +58,13 @@ namespace TechnicalTestCS.Api.Middlewares
                     title: "External API timeout",
                     detail: "External API did not respond in time.");
             }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogInformation(ex, "Resource not found.");
+                await WriteProblem(context, StatusCodes.Status404NotFound,
+                    title: "Not Found",
+                    detail: ex.Message);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unhandled exception.");
