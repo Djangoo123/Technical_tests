@@ -5,8 +5,10 @@ import {
   updateArticleStatus,
   type ArticleSummaryDto,
   type ArticleStatus,
+  type Action
 } from "../api/articles";
 import StatusBadge from "../components/StatusBadge.vue";
+import { nextActions } from "../utils/Actions";
 
 const loading = ref(true);
 const error = ref<string | null>(null);
@@ -20,21 +22,6 @@ const params = computed(() => ({
   status: (status.value || undefined) as ArticleStatus | undefined,
 }));
 
-function nextActions(current: ArticleStatus): { label: string; status: ArticleStatus; disabled?: boolean }[] {
-  switch (current) {
-    case "draft":
-      return [{ label: "Passer en pending", status: "pending" }];
-    case "pending":
-      return [
-        { label: "Accepter", status: "accepted" },
-        { label: "Rejeter", status: "rejected" },
-      ];
-    case "rejected":
-      return [{ label: "Repasser en pending", status: "pending" }];
-    case "accepted":
-      return [{ label: "Aucune action", status: "accepted", disabled: true }];
-  }
-}
 
 async function load() {
   loading.value = true;
