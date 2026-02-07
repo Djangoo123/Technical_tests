@@ -35,7 +35,7 @@ namespace TechnicalTestCS.Api.Services
                         (a.Slug?.Contains(filterText, StringComparison.OrdinalIgnoreCase) ?? false))];
             }
 
-            List<int>? ids = items.Select(a => a.Id).ToList();
+            List<int>? ids = [.. items.Select(a => a.Id)];
             Dictionary<int, ArticleStatus>? map = await _statusService.GetStatusesByIds(ids, ct);
 
             List<ArticleSummaryDto>? results = [.. items.Select(a =>
@@ -54,7 +54,7 @@ namespace TechnicalTestCS.Api.Services
                 if (!StatusParsing.TryParse(status, out var wanted))
                     throw new ArgumentException("Unknown status filter.", nameof(status));
 
-                results = results.Where(x => string.Equals(x.Status, wanted.ToApiString(), StringComparison.OrdinalIgnoreCase)).ToList();
+                results = [.. results.Where(x => string.Equals(x.Status, wanted.ToApiString(), StringComparison.OrdinalIgnoreCase))];
             }
 
             return results;

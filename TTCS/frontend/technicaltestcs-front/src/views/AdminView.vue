@@ -3,7 +3,6 @@ import { onMounted, ref, computed } from "vue";
 import { getAdminArticles, updateArticleStatus } from "../api/articles";
 import type { ArticleSummaryDto } from "../types/ArticleSummaryDto";
 import type { ArticleStatus } from "../types/ArticleStatus";
-import type { Action } from "../utils/Actions";
 import StatusBadge from "../components/StatusBadge.vue";
 import { nextActions } from "../utils/Actions";
 
@@ -87,17 +86,18 @@ onMounted(load);
           <div class="text-xs text-slate-500">ID: {{ a.id }}</div>
         </div>
 
-        <div class="flex flex-wrap gap-2">
-          <button
-            v-for="act in nextActions(a.status)"
-            :key="act.label"
-            :disabled="act.disabled"
-            class="rounded-xl border px-3 py-2 text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
-            @click="!act.disabled && changeStatus(a.id, act.status)"
-          >
-            {{ act.label }}
-          </button>
-        </div>
+      <div class="flex flex-wrap gap-2">
+        <button
+          v-for="act in nextActions(a.status)"
+          :key="act.label"
+          :disabled="('disabled' in act) ? act.disabled : false"
+          class="rounded-xl border px-3 py-2 text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
+          @click="!('disabled' in act) && changeStatus(a.id, act.status)"
+        >
+          {{ act.label }}
+        </button>
+      </div>
+
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@ public class InvalidTransitionTests
     [Fact]
     public async Task Invalid_transition_is_rejected()
     {
-        FakeExternalArticlesClient? external = new FakeExternalArticlesClient(
+        FakeExternalArticlesClient? external = new(
             FakeExternalArticlesClient.Article(1, "A1")
         );
 
